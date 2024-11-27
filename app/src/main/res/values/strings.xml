@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Catsanddogs</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="result">Result</string>
+</resources>
