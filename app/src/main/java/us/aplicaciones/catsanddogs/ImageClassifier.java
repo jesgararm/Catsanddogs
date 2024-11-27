@@ -1,6 +1,8 @@
 package us.aplicaciones.catsanddogs;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.widget.Toast;
+
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import org.tensorflow.lite.DataType;
@@ -18,6 +20,9 @@ public class ImageClassifier {
         tflite = new Interpreter(loadModelFile(assetManager, modelPath));
     }
 
+    public boolean isModelLoaded() {
+        return tflite != null;
+    }
     private MappedByteBuffer loadModelFile(AssetManager assetManager, String modelPath) throws IOException {
         AssetFileDescriptor fileDescriptor = assetManager.openFd(modelPath);
         FileChannel fileChannel;

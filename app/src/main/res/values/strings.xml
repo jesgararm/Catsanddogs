@@ -2,4 +2,6 @@
     <string name="app_name">Catsanddogs</string>
     <string name="capture_image">Capture Image</string>
     <string name="result">Result</string>
+    <string name="select_image_from_gallery">Seleccionar imagen desde la galería</string>
+    <string name="capturar_desde_la_c_mara">Capturar desde la cámara</string>
 </resources>
