@@ -89,9 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (imageBitmap != null) {
                     imageView.setImageBitmap(imageBitmap);
-                    ByteBuffer inputBuffer = ImageProcessor.preprocessImage(imageBitmap, 224);
-                    String[] labels = {"Cat", "Dog"};
-                    String result = classifier.classifyImage(inputBuffer, labels);
+                    String[] etiquetas = {"Gato", "Perro"};
+                    String result = classifier.classifyImage(imageBitmap, etiquetas);
                     resultTextView.setText(result);
                 }
             } catch (IOException e) {
