@@ -1,6 +1,7 @@
 package us.aplicaciones.catsanddogs;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,9 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Actividad principal de la aplicación para clasificar imágenes de gatos y perros.
+ * @noinspection deprecation
  */
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param savedInstanceState Estado guardado de la instancia anterior.
      */
+    @SuppressLint("QueryPermissionsNeeded")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                    imageBitmap = (Bitmap) data.getExtras().get("data");
+                    imageBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 } else if (requestCode == REQUEST_IMAGE_PICK) {
                     if (data.getData() == null) {
                         throw new IOException("No image selected");
