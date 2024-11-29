@@ -16,8 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
+/**
+ * Actividad principal de la aplicación para clasificar imágenes de gatos y perros.
+ */
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_PICK = 2;
@@ -26,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView resultTextView;
     private ImageClassifier classifier;
 
+    /**
+     * Método llamado cuando se crea la actividad.
+     *
+     * @param savedInstanceState Estado guardado de la instancia anterior.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         resultTextView = findViewById(R.id.resultTextView);
         Button captureButton = findViewById(R.id.captureButton);
         Button selectButton = findViewById(R.id.selectButton);
+
+        // Verificar si el archivo del modelo es accesible
         try {
             getAssets().open("cats_vs_dogs_model.tflite").close();
             Toast.makeText(this, "Model file is accessible", Toast.LENGTH_SHORT).show();
@@ -42,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Model file not found: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+
+        // Inicializar el clasificador de imágenes
         try {
             classifier = new ImageClassifier(getAssets(), "cats_vs_dogs_model.tflite");
             if (classifier.isModelLoaded()) {
@@ -53,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Error initializing model: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+
         // Botón para capturar imagen
         captureButton.setOnClickListener(v -> {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -71,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
         requestStoragePermission();
     }
 
+    /**
+     * Método llamado cuando se recibe el resultado de una actividad iniciada con startActivityForResult.
+     *
+     * @param requestCode Código de solicitud.
+     * @param resultCode Código de resultado.
+     * @param data Datos devueltos por la actividad.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -103,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Solicita permisos de almacenamiento si es necesario.
+     */
     private void requestStoragePermission() {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q &&
                 checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
